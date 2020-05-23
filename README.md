@@ -1,1 +1,1 @@
-# Dota-Pro-Replay-Archive
+# Dota-Replay-Archive
