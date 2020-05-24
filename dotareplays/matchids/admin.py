@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Replay
+from .models import ReplayPlayer
 
-# Register your models here.
+admin.site.register(Replay)
+admin.site.register(ReplayPlayer)
