@@ -1,7 +1,7 @@
 # Dota-Replay-Archiver
 A set of lambda functions written in Python to periodically download and save the replay .dem files of new professional DOTA 2 matches into AWS S3 buckets. 
 
-I've been running these lambda functions on my AWS account for the last 4 months, archiving roughly 3TB of replays a month, at a cost of about $5/mo (both of these vary based on match volume!). Here's an example of the output, saved into an S3 bucket:
+I've been running these lambda functions for the last 4 months, archiving roughly 3TB of replays a month, at a cost of about $5/mo (both of these vary based on match volume!). Here's an example of the output, saved into an S3 bucket:
 ![Resulting .dem files](dem_files.png)
 
 ### Why?
