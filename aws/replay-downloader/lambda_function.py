@@ -4,6 +4,9 @@ import boto3
 import urllib3
 import bz2
 
+S3_BUCKET_NAME = ""
+#Before using, create an S3 bucket and put its name here.
+
 def lambda_handler(event, context):
     s3 = boto3.client("s3")
     message = json.loads(event['Records'][0]['Sns']['Message'])
@@ -19,7 +22,7 @@ def lambda_handler(event, context):
     with open("/tmp/{}.dem".format(match_id), 'wb') as f:
         f.write(decompressed)
 
-    s3.upload_file("/tmp/{}.dem".format(match_id), "dota-replays-storage", "{}.dem".format(match_id))
+    s3.upload_file("/tmp/{}.dem".format(match_id), S3_BUCKET_NAME, "{}.dem".format(match_id))
     
     return {
         'statusCode': 200,
