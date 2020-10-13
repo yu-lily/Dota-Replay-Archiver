@@ -8,3 +8,12 @@ Replay files are only hosted for about 14 days (varies based on game volume) on 
 `matchid-finder` is called hourly (or however often you'd like) by a CloudWatch event. When called, it scrapes DOTA 2 match IDs from [this tracker](http://www.dota2protracker.com/), and sends the IDs of matches that do not already exist in the target S3 bucket to an SNS stream.
 
 `replay-downloader` is called by the SNS stream with a match ID included as a parameter in each function call. The function queries [OpenDota's API](https://docs.opendota.com/) to retrieve the datacenter cluster ID and replay salt that correspond to the match ID. These two pieces of information are required to locate the replay on Valve's CDN. It then downloads the replay file from Valve's servers, and saves it to a designated S3 bucket.
+
+## Usage:
+Clone the repository onto your device. Create an SNS stream and and S3 bucket in AWS. Keep the ARN of the SNS stream and the name of the bucket handy.
+
+Open `aws\matchid-finder\lambda_function.py` in your text editor of choice, and paste your SNS stream ARN into the constant at the top of the function. Copy `lambda_function.py` into `aws\matchid-finder\packages`, compress the folder, and upload to AWS as a lambda function. All required dependencies are already included.
+
+Repeat these steps for `aws\replay-downloader\lambda_function.py`, similarly pasting the S3 bucket name into the constant at the top of the function.
+
+After both lambda functions are uploaded onto AWS, set the SNS stream as a trigger for `replay-downloader`, and set `matchid-finder` to trigger hourly, or however often you'd like!
