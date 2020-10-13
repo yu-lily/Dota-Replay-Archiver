@@ -5,7 +5,7 @@ I've been running these lambda functions for the last 4 months, archiving roughl
 ![Resulting .dem files](dem_files.png)
 
 ### Why?
-Replay files are only hosted for about 14 days (varies based on game volume) on Valve's CDN servers. After that, they're gone for good unless they're saved somewhere else.
+Replay files are only hosted for about 14 days (varies) on Valve's CDN servers. After that, they're gone for good unless they're saved somewhere else.
 
 ### How it works:
 `matchid-finder` is called hourly (or however often you'd like) by a CloudWatch event. When called, it scrapes DOTA 2 match IDs from [this tracker](http://www.dota2protracker.com/), and sends the IDs of matches that do not already exist in the target S3 bucket to an SNS stream.
