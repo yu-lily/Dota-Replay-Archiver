@@ -7,6 +7,9 @@ import re
 import botocore
 import time
 
+SNS_STREAM_ARN = ""
+#Before using, set this to the ARN of a SNS stream that you setup.
+
 def lambda_handler(event, context):
     s3 = boto3.resource("s3")
     client = boto3.client("sns")
@@ -28,7 +31,7 @@ def lambda_handler(event, context):
                 print("Match {} not found, trying to grab.".format(match_id))
                 message = {"match_id": match_id}
                 response = client.publish(
-                    TargetArn="arn:aws:sns:us-west-1:575345508156:replays",
+                    TargetArn= SNS_STREAM_ARN,
                     Message=json.dumps({'default': json.dumps(message)}),
                     MessageStructure='json'
                     )
