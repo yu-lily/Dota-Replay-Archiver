@@ -8,7 +8,7 @@ I've been running these lambda functions since June 2020, archiving roughly 3TB 
 Replay files are only hosted for about 14 days (varies) on Valve's CDN servers. After that, they're gone for good unless they're saved somewhere else.
 
 ### How it works:
-`matchid-finder` is called hourly (or however often you'd like) by a CloudWatch event. When called, it scrapes DOTA 2 match IDs from [this tracker](http://www.dota2protracker.com/), and sends the IDs of matches that do not already exist in the target S3 bucket to an SNS stream.
+`matchid-finder` is called hourly by a CloudWatch event (or by another trigger you decide). When called, it scrapes DOTA 2 match IDs from [this tracker](http://www.dota2protracker.com/), and sends the IDs of matches that do not already exist in the target S3 bucket to an SNS stream.
 
 `replay-downloader` is called by the SNS stream with a match ID included as a parameter in each function call. The function queries [OpenDota's API](https://docs.opendota.com/) to retrieve the datacenter cluster ID and replay salt that correspond to the match ID. These two pieces of information are required to locate the replay on Valve's CDN. It then downloads the replay file from Valve's servers, and saves it to a designated S3 bucket.
 
